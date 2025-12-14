@@ -1,0 +1,42 @@
+{% extends 'manager/base.html' %}
+
+{% block content %}
+<h2>Тренировочный бой</h2>
+<form method="POST" class="mb-5 p-4 border rounded bg-white">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col">
+            <label>Покемон 1</label>
+            <select name="pokemon1" class="form-select">
+                {% for p in team %}
+                    <option value="{{ p.id }}">{{ p.name|title }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-1 d-flex align-items-center justify-content-center">
+            <h3>VS</h3>
+        </div>
+        <div class="col">
+            <label>Покемон 2</label>
+            <select name="pokemon2" class="form-select">
+                {% for p in team %}
+                    <option value="{{ p.id }}">{{ p.name|title }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-danger mt-3 w-100">Начать Бой!</button>
+</form>
+
+{% if winner %}
+    <div class="alert alert-warning text-center">
+        <h4>Результаты боя:</h4>
+        {% for line in log %}
+            <p>{{ line }}</p>
+        {% endfor %}
+        <hr>
+        <h1 class="text-success">Победитель: {{ winner.name|title }}!</h1>
+        <img src="{{ winner.sprite_url }}" alt="winner">
+    </div>
+{% endif %}
+{% endblock %}

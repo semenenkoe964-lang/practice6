@@ -1,0 +1,23 @@
+{% extends 'manager/base.html' %}
+
+{% block content %}
+<a href="{% url 'index' %}" class="btn btn-secondary mb-3">Назад</a>
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="col-md-4 text-center bg-light">
+            <img src="{{ pokemon.sprite_url }}" class="img-fluid rounded-start" style="width: 200px;" alt="{{ pokemon.name }}">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h2 class="card-title text-capitalize">{{ pokemon.name }}</h2>
+                <p class="card-text"><small class="text-muted">ID: {{ pokemon.api_id }}</small></p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">HP: <strong>{{ pokemon.hp }}</strong></li>
+                    <li class="list-group-item">Attack: <strong>{{ pokemon.attack }}</strong></li>
+                    <li class="list-group-item">Defense: <strong>{{ pokemon.defense }}</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

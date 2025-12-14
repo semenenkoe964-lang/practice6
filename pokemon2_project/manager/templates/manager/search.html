@@ -1,0 +1,39 @@
+{% extends 'manager/base.html' %}
+
+{% block content %}
+<h2>Поиск Покемона</h2>
+<form method="POST" class="d-flex mb-4">
+    {% csrf_token %}
+    <input class="form-control me-2" type="search" name="query" placeholder="Введите имя (например: pikachu)" required>
+    <button class="btn btn-outline-success" type="submit">Найти</button>
+</form>
+
+{% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+{% endif %}
+
+{% if result %}
+    <div class="card mx-auto" style="width: 18rem;">
+        <img src="{{ result.sprite_url }}" class="card-img-top bg-light" alt="{{ result.name }}">
+        <div class="card-body text-center">
+            <h5 class="card-title text-capitalize">{{ result.name }}</h5>
+            <p>HP: {{ result.hp }} | ATK: {{ result.attack }} | DEF: {{ result.defense }}</p>
+
+            {% if result.exists %}
+                <button class="btn btn-secondary" disabled>Уже в команде</button>
+            {% else %}
+                <form action="{% url 'add_pokemon' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="name" value="{{ result.name }}">
+                    <input type="hidden" name="api_id" value="{{ result.api_id }}">
+                    <input type="hidden" name="sprite_url" value="{{ result.sprite_url }}">
+                    <input type="hidden" name="hp" value="{{ result.hp }}">
+                    <input type="hidden" name="attack" value="{{ result.attack }}">
+                    <input type="hidden" name="defense" value="{{ result.defense }}">
+                    <button type="submit" class="btn btn-success">Добавить в команду</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

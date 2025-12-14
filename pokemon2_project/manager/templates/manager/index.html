@@ -1,0 +1,23 @@
+{% extends 'manager/base.html' %}
+
+{% block content %}
+<h2>Моя Команда</h2>
+{% if team %}
+    <div class="row">
+        {% for poke in team %}
+        <div class="col-md-3 mb-4">
+            <div class="card text-center h-100">
+                <img src="{{ poke.sprite_url }}" class="card-img-top w-50 mx-auto" alt="{{ poke.name }}">
+                <div class="card-body">
+                    <h5 class="card-title text-capitalize">{{ poke.name }}</h5>
+                    <a href="{% url 'detail_pokemon' poke.id %}" class="btn btn-primary btn-sm">Инфо</a>
+                    <a href="{% url 'remove_pokemon' poke.id %}" class="btn btn-danger btn-sm">Удалить</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>Ваша команда пуста. <a href="{% url 'search' %}">Добавьте покемонов!</a></p>
+{% endif %}
+{% endblock %}
